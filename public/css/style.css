@@ -1,0 +1,370 @@
+/* Variables de color para fácil mantenimiento */
+:root {
+  --primary-bg: #272727;
+  --secondary-bg: #393939;
+  --accent-color: #4CAF50;
+  --text-color: #ffffff;
+  --text-muted: #919191;
+  --error-color: #f44336;
+  --success-color: #4CAF50;
+  --info-color: #2196F3;
+}
+
+/* Estilos generales */
+body {
+  background-color: var(--primary-bg);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Contenedor principal del login */
+.login-box {
+  width: 400px;
+  max-width: 90%;
+  padding: 40px;
+  background: var(--secondary-bg);
+  box-sizing: border-box;
+  box-shadow: 0 15px 25px rgba(0, 0, 0, 0.6);
+  border-radius: 10px;
+  position: relative;
+  overflow: hidden;
+}
+
+.logo-container {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.logo-container img {
+  max-width: 100%;
+  height: auto;
+}
+
+.login-box h1 {
+  margin: 0 0 30px;
+  padding: 0;
+  color: var(--text-color);
+  text-align: center;
+  font-size: 1.8rem;
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+
+/* Grupos de formulario */
+.form-group {
+  margin-bottom: 25px;
+  position: relative;
+}
+
+/* Estilos para inputs */
+.user-box {
+  position: relative;
+}
+
+.user-box input {
+  width: 100%;
+  padding: 10px 0;
+  font-size: 16px;
+  color: var(--text-color);
+  margin-bottom: 5px;
+  border: none;
+  border-bottom: 1px solid var(--text-color);
+  outline: none;
+  background: transparent;
+  transition: all 0.3s;
+}
+
+.user-box input:focus {
+  border-bottom-color: var(--accent-color);
+}
+
+.user-box label {
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 10px 0;
+  font-size: 16px;
+  color: var(--text-color);
+  pointer-events: none;
+  transition: all 0.3s;
+}
+
+.user-box input:focus ~ label,
+.user-box input:valid ~ label {
+  top: -20px;
+  left: 0;
+  color: var(--accent-color);
+  font-size: 12px;
+}
+
+/* Contenedor de contraseña con icono */
+.password-container {
+  position: relative;
+}
+
+.toggle-password {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: var(--text-muted);
+  transition: color 0.3s;
+}
+
+.toggle-password:hover {
+  color: var(--text-color);
+}
+
+/* Botón de submit */
+.submit-btn {
+  position: relative;
+  display: inline-block;
+  padding: 12px 24px;
+  font-weight: bold;
+  color: var(--text-color);
+  font-size: 16px;
+  text-decoration: none;
+  text-transform: uppercase;
+  overflow: hidden;
+  transition: all 0.5s;
+  margin-top: 20px;
+  letter-spacing: 2px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  text-align: center;
+}
+
+.submit-btn:hover {
+  background: var(--accent-color);
+  color: var(--text-color);
+  border-radius: 5px;
+}
+
+.submit-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.submit-btn span {
+  position: absolute;
+  display: block;
+}
+
+.submit-btn span:nth-child(1) {
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--accent-color));
+  animation: btn-anim1 1.5s linear infinite;
+}
+
+@keyframes btn-anim1 {
+  0% {
+    left: -100%;
+  }
+  50%, 100% {
+    left: 100%;
+  }
+}
+
+.submit-btn span:nth-child(2) {
+  top: -100%;
+  right: 0;
+  width: 2px;
+  height: 100%;
+  background: linear-gradient(180deg, transparent, var(--accent-color));
+  animation: btn-anim2 1.5s linear infinite;
+  animation-delay: 0.375s;
+}
+
+@keyframes btn-anim2 {
+  0% {
+    top: -100%;
+  }
+  50%, 100% {
+    top: 100%;
+  }
+}
+
+.submit-btn span:nth-child(3) {
+  bottom: 0;
+  right: -100%;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(270deg, transparent, var(--accent-color));
+  animation: btn-anim3 1.5s linear infinite;
+  animation-delay: 0.75s;
+}
+
+@keyframes btn-anim3 {
+  0% {
+    right: -100%;
+  }
+  50%, 100% {
+    right: 100%;
+  }
+}
+
+.submit-btn span:nth-child(4) {
+  bottom: -100%;
+  left: 0;
+  width: 2px;
+  height: 100%;
+  background: linear-gradient(360deg, transparent, var(--accent-color));
+  animation: btn-anim4 1.5s linear infinite;
+  animation-delay: 1.125s;
+}
+
+@keyframes btn-anim4 {
+  0% {
+    bottom: -100%;
+  }
+  50%, 100% {
+    bottom: 100%;
+  }
+}
+
+/* Spinner de carga */
+.loading-spinner {
+  display: none;
+  margin: 15px auto;
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  border-top: 3px solid var(--accent-color);
+  width: 20px;
+  height: 20px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Mensajes de respuesta */
+.response-message {
+  padding: 10px;
+  margin: 15px 0;
+  border-radius: 4px;
+  text-align: center;
+  font-size: 14px;
+  transition: all 0.3s;
+}
+
+.response-message.success {
+  background-color: rgba(76, 175, 80, 0.2);
+  color: var(--success-color);
+}
+
+.response-message.error {
+  background-color: rgba(244, 67, 54, 0.2);
+  color: var(--error-color);
+}
+
+.response-message.info {
+  background-color: rgba(33, 150, 243, 0.2);
+  color: var(--info-color);
+}
+
+/* Pie de formulario */
+.form-footer {
+  margin-top: 30px;
+  text-align: center;
+}
+
+.text-muted {
+  color: var(--text-muted);
+  font-size: 14px;
+  margin: 5px 0;
+}
+
+.register-link, .forgot-link {
+  color: var(--accent-color);
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.register-link:hover, .forgot-link:hover {
+  color: var(--text-color);
+  text-decoration: underline;
+}
+
+/* Efecto de onda al hacer clic */
+.click-wave {
+  position: absolute;
+  background: rgba(255, 255, 255, 0.4);
+  border-radius: 50%;
+  transform: scale(0);
+  animation: wave 0.6s linear;
+  pointer-events: none;
+}
+
+@keyframes wave {
+  100% {
+    transform: scale(2);
+    opacity: 0;
+  }
+}
+
+/* Responsive design */
+@media (max-width: 480px) {
+  .login-box {
+    padding: 30px 20px;
+    width: 90%;
+  }
+  
+  .login-box h1 {
+    font-size: 1.5rem;
+  }
+  
+  .submit-btn {
+    padding: 10px 15px;
+    font-size: 14px;
+  }
+}
+
+.response-message {
+  padding: 12px;
+  margin: 15px 0;
+  border-radius: 4px;
+  text-align: center;
+  font-size: 14px;
+  transition: all 0.3s ease;
+}
+
+.response-message.info {
+  background-color: rgba(33, 150, 243, 0.2);
+  color: #2196F3;
+  border-left: 4px solid #2196F3;
+}
+
+.response-message.success {
+  background-color: rgba(76, 175, 80, 0.2);
+  color: #4CAF50;
+  border-left: 4px solid #4CAF50;
+}
+
+.response-message.error {
+  background-color: rgba(244, 67, 54, 0.2);
+  color: #f44336;
+  border-left: 4px solid #f44336;
+}
+
+/* Animación para el mensaje */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.response-message {
+  animation: fadeIn 0.3s ease forwards;
+}

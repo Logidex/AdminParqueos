@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Parqueos - Menú Principal</title>
+    <link rel="stylesheet" href="/public/css/style_menu.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+  </head>
+
+  <body>
+    <!-- Header -->
+    <header>
+      <div class="div-logo">
+        <h3 class="logo"><i class="fas fa-parking"></i> Admin Parqueos</h3>
+      </div>
+      <div class="div-salir">
+        <button class="salir">
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+          <i class="fas fa-sign-out-alt"></i> CERRAR SESIÓN
+        </button>
+      </div>
+    </header>
+
+    <!-- Contenedor principal con el menú y el contenido -->
+    <div class="main-container">
+      <!-- Menú vertical -->
+      <nav>
+        <ul>
+          <li class="active">
+            <a
+              href="javascript:void(0)"
+              onclick="cargarContenido('dashboard.html')"
+            >
+              <i class="fas fa-tachometer-alt"></i> DASHBOARD
+            </a>
+          </li>
+          <li>
+            <a
+              href="javascript:void(0)"
+              onclick="cargarContenido('espacios.html')"
+            >
+              <i class="fas fa-car"></i> ESPACIOS
+            </a>
+          </li>
+          <li>
+            <a
+              href="javascript:void(0)"
+              onclick="cargarContenido('reportes.html')"
+            >
+              <i class="fas fa-chart-bar"></i> REPORTES
+            </a>
+          </li>
+          <li>
+            <a
+              href="javascript:void(0)"
+              onclick="cargarContenido('usuarios.html')"
+            >
+              <i class="fas fa-users"></i> USUARIOS
+            </a>
+          </li>
+          <li>
+            <a
+              href="javascript:void(0)"
+              onclick="cargarContenido('configuracion.html')"
+            >
+              <i class="fas fa-cog"></i> CONFIGURACIÓN
+            </a>
+          </li>
+        </ul>
+      </nav>
+
+      <!-- Contenido -->
+      <div class="content">
+        <div class="content-header">
+          <h2 id="titulo-contenido">Dashboard</h2>
+        </div>
+        <iframe
+          id="contenido"
+          src="dashboard.html"
+          width="100%"
+          height="100%"
+          frameborder="0"
+          loading="lazy"
+        ></iframe>
+      </div>
+    </div>
+
+    <script>
+      // Función para cargar contenido en el iframe
+      function cargarContenido(pagina, titulo) {
+        const iframe = document.getElementById("contenido");
+        const tituloContenido = document.getElementById("titulo-contenido");
+
+        // Mostrar loader
+        iframe.style.opacity = "0.5";
+        iframe.style.transition = "opacity 0.3s ease";
+
+        iframe.onload = function () {
+          iframe.style.opacity = "1";
+          tituloContenido.textContent =
+            titulo || pagina.replace(".html", "").toUpperCase();
+        };
+
+        iframe.src = pagina;
+
+        // Actualizar estado activo del menú
+        const menuItems = document.querySelectorAll("nav ul li");
+        menuItems.forEach((item) => {
+          item.classList.remove("active");
+          if (
+            item.querySelector("a").getAttribute("onclick").includes(pagina)
+          ) {
+            item.classList.add("active");
+          }
+        });
+      }
+
+      // Función para cerrar sesión
+      function logout() {
+        // 1. Eliminar todos los datos de sesión
+        localStorage.clear();
+
+        // 2. Opcional: Hacer logout en el servidor (si es necesario)
+        fetch("/logout", {
+          method: "POST",
+          credentials: "same-origin",
+        })
+          .catch((error) => {
+            console.error("Error en logout:", error);
+          })
+          .finally(() => {
+            // 3. Redirigir a login con parámetro de logout
+            window.location.href = "login.html?logout=success";
+          });
+      }
+
+      // Asignar evento al botón
+      document.addEventListener("DOMContentLoaded", () => {
+        const logoutBtn = document.querySelector(".salir");
+        if (logoutBtn) {
+          logoutBtn.addEventListener("click", logout);
+        }
+      });
+      // Asignar eventos al cargar el DOM
+      document.addEventListener("DOMContentLoaded", () => {
+        // Evento para botón de salir
+        document.querySelector(".salir").addEventListener("click", logout);
+
+        // Verificar autenticación
+        if (!localStorage.getItem("authToken")) {
+          window.location.href = "login.html?error=session_expired";
+        }
+
+        // Cargar título inicial
+        const currentIframeSrc = document
+          .getElementById("contenido")
+          .src.split("/")
+          .pop();
+        if (currentIframeSrc) {
+          document.getElementById("titulo-contenido").textContent =
+            currentIframeSrc.replace(".html", "").toUpperCase();
+        }
+      });
+
+      // Verificar conexión periódicamente
+      setInterval(() => {
+        if (!navigator.onLine) {
+          alert(
+            "Se ha perdido la conexión a internet. Por favor, verifica tu conexión."
+          );
+        }
+      }, 30000);
+    </script>
+  </body>
+</html>

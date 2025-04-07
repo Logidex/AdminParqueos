@@ -1,0 +1,173 @@
+/* Estilos para los nuevos elementos */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    background-color: #2a2a2a;
+    color: white;
+}
+
+#add-space-btn {
+    padding: 8px 15px;
+    font-size: 14px;
+}
+
+.parking-space {
+    background-color: #333;
+    border-radius: 5px;
+    padding: 15px;
+    margin-bottom: 15px;
+    color: white;
+}
+
+.parking-space.disponible {
+    border-left: 5px solid #28a745;
+}
+
+.parking-space.ocupado {
+    border-left: 5px solid #dc3545;
+}
+
+.parking-space.mantenimiento {
+    border-left: 5px solid #ffc107;
+}
+
+.space-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.badge {
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.badge.disponible {
+    background-color: #28a745;
+    color: white;
+}
+
+.badge.ocupado {
+    background-color: #dc3545;
+    color: white;
+}
+
+.badge.mantenimiento {
+    background-color: #ffc107;
+    color: #212529;
+}
+
+.space-actions {
+    display: flex;
+    gap: 8px;
+    margin-top: 15px;
+}
+
+.space-actions .btn {
+    padding: 5px 10px;
+    font-size: 12px;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.7);
+}
+
+.modal-content {
+    background-color: #2a2a2a;
+    margin: 10% auto;
+    padding: 20px;
+    border-radius: 5px;
+    width: 400px;
+    max-width: 90%;
+    color: white;
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.close-modal {
+    color: #aaa;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close-modal:hover {
+    color: white;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 8px;
+    border-radius: 4px;
+    border: 1px solid #444;
+    background-color: #333;
+    color: white;
+}
+
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.btn {
+    padding: 8px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.btn-primary {
+    background-color: #007bff;
+    color: white;
+}
+
+.btn-secondary {
+    background-color: #6c757d;
+    color: white;
+}
+
+.btn-danger {
+    background-color: #dc3545;
+    color: white;
+}
+
+.btn-assign {
+    background-color: #28a745;
+    color: white;
+}
+
+.btn-release {
+    background-color: #dc3545;
+    color: white;
+}

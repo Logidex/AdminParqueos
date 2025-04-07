@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Parqueos - Inicio de Sesión</title>
+    <link rel="stylesheet" href="/public/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="login-box">
+        <div class="logo-container">
+            <!-- Agrega tu logo aquí -->
+            <h2 style="color: white;">Administrador de Parqueos</h2>
+        </div>
+        <h1>Inicio de Sesión</h1>
+        <form id="loginForm">
+            <div class="form-group">
+                <div class="user-box">
+                    <input id="username" type="text" required autocomplete="username">
+                    <label>Usuario</label>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <div class="user-box password-container">
+                    <input id="password" type="password" required autocomplete="current-password">
+                    <label>Contraseña</label>
+                    <i class="toggle-password fas fa-eye" onclick="togglePasswordVisibility()"></i>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <button type="submit" id="loginBtn" class="submit-btn">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    Ingresar
+                </button>
+                <div class="loading-spinner" id="loadingSpinner"></div>
+            </div>
+            
+            <div class="form-footer">
+                <p class="text-muted">¿No tienes cuenta? <a href="/public/html/register.html" class="register-link">Regístrate aquí</a></p>
+            </div>
+            
+            <div id="responseMessage" class="response-message"></div>
+        </form>
+    </div>
+
+    <script>
+        // Función para mostrar/ocultar contraseña
+        function togglePasswordVisibility() {
+            const passwordInput = document.getElementById('password');
+            const icon = document.querySelector('.toggle-password');
+            
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                icon.classList.replace('fa-eye', 'fa-eye-slash');
+            } else {
+                passwordInput.type = 'password';
+                icon.classList.replace('fa-eye-slash', 'fa-eye');
+            }
+        }
+        
+        // Validación del formulario
+        function validateForm(username, password) {
+            if (!username.trim()) {
+                showMessage('Por favor ingresa tu usuario', 'error');
+                return false;
+            }
+            
+            if (!password.trim()) {
+                showMessage('Por favor ingresa tu contraseña', 'error');
+                return false;
+            }
+            
+            return true;
+        }
+        
+        // Mostrar mensajes al usuario
+        function showMessage(message, type = 'success') {
+            const messageElement = document.getElementById('responseMessage');
+            messageElement.innerText = message;
+            messageElement.className = `response-message ${type}`;
+        }
+        
+        // Manejar el login
+        async function handleLogin(event) {
+            event.preventDefault();
+            
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            
+            if (!validateForm(username, password)) return;
+            
+            const loginBtn = document.getElementById('loginBtn');
+            const spinner = document.getElementById('loadingSpinner');
+            
+            // Mostrar estado de carga
+            loginBtn.disabled = true;
+            spinner.style.display = 'block';
+            showMessage('Verificando credenciales...', 'info');
+            
+            try {
+                const response = await fetch('http://localhost:3000/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ username, password })
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    // Guardar token y datos de usuario
+                    localStorage.setItem('authToken', result.token);
+                    localStorage.setItem('userData', JSON.stringify(result.user));
+                    
+                    showMessage('✅ Inicio de sesión exitoso', 'success');
+                    
+                    // Redireccionar después de breve retraso
+                    setTimeout(() => {
+                        window.location.href = '/public/html/menu.html';
+                    }, 1000);
+                } else {
+                    showMessage(result.message || '❌ Credenciales incorrectas', 'error');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                showMessage('❌ Error de conexión con el servidor', 'error');
+            } finally {
+                loginBtn.disabled = false;
+                spinner.style.display = 'none';
+            }
+        }
+        
+        // Event listeners
+        document.getElementById('loginForm').addEventListener('submit', handleLogin);
+        
+        // Opcional: Permitir login con Enter
+        document.getElementById('password').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                handleLogin(e);
+            }
+        });
+    </script>
+</body>
+</html>
+

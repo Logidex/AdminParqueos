@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Reportes | ParkingAdmin</title>
+    <link rel="stylesheet" href="/public/css/style_reportes.css">
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  </head>
+  <body>
+    <!-- Contenido Principal -->
+    <div class="main-content">
+      <header>
+        <h1 style="color: white">
+          <i class="fas fa-chart-bar"></i> Reportes de Parqueo
+        </h1>
+      </header>
+
+      <!-- Filtros -->
+      <div class="filters">
+        <div class="filter-group">
+          <h3>Rango de fechas</h3>
+          <div class="date-range">
+            <input
+              type="text"
+              id="date-start"
+              placeholder="Fecha inicio"
+              style="background-color: #1f1f1f; color: white"
+            />
+            <span>a</span>
+            <input
+              type="text"
+              id="date-end"
+              placeholder="Fecha fin"
+              style="background-color: #1f1f1f; color: white"
+            />
+          </div>
+        </div>
+
+        <div class="filter-group">
+          <h3>Tipo de vehículo</h3>
+          <div class="radio-group">
+            <label
+              ><input type="radio" name="vehicle-type" checked /> Todos</label
+            >
+            <label><input type="radio" name="vehicle-type" /> Autos</label>
+            <label><input type="radio" name="vehicle-type" /> Motos</label>
+            <label><input type="radio" name="vehicle-type" /> Otros</label>
+          </div>
+        </div>
+
+        <div class="filter-group">
+          <h3>Generar reporte</h3>
+          <button id="generate-report">
+            <i class="fas fa-sync-alt"></i> Actualizar
+          </button>
+        </div>
+      </div>
+
+      <!-- Resumen General -->
+      <div class="summary-cards">
+        <div class="summary-card">
+          <h3 style="color: white;">Ingresos totales</h3>
+          <div class="value">$1,240</div>
+          <div>+12% vs semana anterior</div>
+        </div>
+        <div class="summary-card">
+          <h3 style="color: white;">Tasa de ocupación</h3>
+          <div class="value">82%</div>
+          <div>+5% vs semana anterior</div>
+        </div>
+        <div class="summary-card">
+          <h3 style="color: white;">Vehículos registrados</h3>
+          <div class="value">187</div>
+          <div>Promedio 3.2h por vehículo</div>
+        </div>
+      </div>
+
+      <!-- Gráfico de Ocupación -->
+      <div class="chart-container">
+        <h2 class="chart-title">
+          <span
+            ><i class="fas fa-chart-line"></i> Ocupación por hora (últimos 7
+            días)</span
+          >
+          <select id="chart-type">
+            <option value="bar">Barras</option>
+            <option value="line">Líneas</option>
+          </select>
+        </h2>
+        <canvas id="occupation-chart"></canvas>
+      </div>
+
+      <!-- Reporte Detallado -->
+      <div class="detailed-report">
+        <h2><i class="fas fa-list"></i> Reporte Detallado</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Fecha</th>
+              <th>Espacio</th>
+              <th>Tipo</th>
+              <th>Tiempo</th>
+              <th>Ingreso</th>
+              <th>Método Pago</th>
+            </tr>
+          </thead>
+          <tbody id="report-data">
+            <!-- Datos dinámicos desde JS -->
+          </tbody>
+        </table>
+
+        <div class="report-actions">
+          <button class="btn-export btn-excel">
+            <i class="fas fa-file-excel"></i> Exportar a Excel
+          </button>
+          <button class="btn-export btn-pdf">
+            <i class="fas fa-file-pdf"></i> Generar PDF
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/es.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        // Configurar selector de fechas
+        flatpickr("#date-start", {
+          locale: "es",
+          dateFormat: "d/m/Y",
+          defaultDate: "today",
+        });
+
+        flatpickr("#date-end", {
+          locale: "es",
+          dateFormat: "d/m/Y",
+          defaultDate: "today",
+        });
+
+        // Gráfico con Chart.js
+        const ctx = document
+          .getElementById("occupation-chart")
+          .getContext("2d");
+        const chart = new Chart(ctx, {
+          type: "bar",
+          data: {
+            labels: ["Lun", "Mar", "Mié", "Jue", "Vie", "Sáb", "Dom"],
+            datasets: [
+              {
+                label: "Ocupación (%)",
+                data: [65, 75, 82, 78, 85, 90, 60],
+                backgroundColor: "rgba(54, 162, 235, 0.7)",
+                borderColor: "rgba(54, 162, 235, 1)",
+                borderWidth: 1,
+              },
+              {
+                label: "Ingresos ($)",
+                data: [120, 180, 210, 190, 230, 280, 110],
+                backgroundColor: "rgba(255, 99, 132, 0.7)",
+                borderColor: "rgba(255, 99, 132, 1)",
+                borderWidth: 1,
+                type: "line",
+                yAxisID: "y1",
+              },
+            ],
+          },
+          options: {
+            responsive: true,
+            scales: {
+              y: {
+                beginAtZero: true,
+                title: {
+                  display: true,
+                  text: "Ocupación (%)",
+                },
+              },
+              y1: {
+                position: "right",
+                beginAtZero: true,
+                title: {
+                  display: true,
+                  text: "Ingresos ($)",
+                },
+                grid: {
+                  drawOnChartArea: false,
+                },
+              },
+            },
+          },
+        });
+
+        // Cambiar tipo de gráfico
+        document
+          .getElementById("chart-type")
+          .addEventListener("change", function () {
+            chart.config.type = this.value;
+            chart.update();
+          });
+
+        // Datos de ejemplo para el reporte
+        const reportData = [
+          {
+            fecha: "01/06/2023",
+            espacio: "A-01",
+            tipo: "Auto",
+            tiempo: "2h 30m",
+            ingreso: "$5.00",
+            metodo: "Efectivo",
+          },
+          {
+            fecha: "01/06/2023",
+            espacio: "B-02",
+            tipo: "Moto",
+            tiempo: "1h 15m",
+            ingreso: "$2.50",
+            metodo: "Tarjeta",
+          },
+          {
+            fecha: "02/06/2023",
+            espacio: "C-03",
+            tipo: "Auto",
+            tiempo: "4h 00m",
+            ingreso: "$8.00",
+            metodo: "App",
+          },
+        ];
+
+        // Llenar tabla de reportes
+        const reportTable = document.getElementById("report-data");
+        reportData.forEach((item) => {
+          const row = document.createElement("tr");
+          row.innerHTML = `
+                    <td>${item.fecha}</td>
+                    <td>${item.espacio}</td>
+                    <td>${item.tipo}</td>
+                    <td>${item.tiempo}</td>
+                    <td>${item.ingreso}</td>
+                    <td>${item.metodo}</td>
+                `;
+          reportTable.appendChild(row);
+        });
+
+        // Botón para generar reporte
+        document
+          .getElementById("generate-report")
+          .addEventListener("click", function () {
+            alert("Generando nuevo reporte con los filtros seleccionados...");
+            // Aquí iría el código para actualizar los datos del reporte
+          });
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Configuración | ParkingAdmin</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/public/css/style_configuracion.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Encabezado -->
+        <div class="page-header">
+            <h1 class="page-title"><i class="fas fa-cog"></i> Configuración del Sistema</h1>
+        </div>
+
+        <!-- Panel de configuración -->
+        <div class="settings-panel">
+            <!-- Menú lateral -->
+            <div class="settings-menu">
+                <h3>General</h3>
+                <div class="menu-item active" data-section="general">
+                    <i class="fas fa-sliders-h"></i> Ajustes Generales
+                </div>
+                <div class="menu-item" data-section="tarifas">
+                    <i class="fas fa-tags"></i> Tarifas
+                </div>
+                
+                <h3>Seguridad</h3>
+                <div class="menu-item" data-section="usuarios">
+                    <i class="fas fa-user-shield"></i> Permisos
+                </div>
+                <div class="menu-item" data-section="backup">
+                    <i class="fas fa-database"></i> Copias de Seguridad
+                </div>
+                
+                <h3>Integraciones</h3>
+                <div class="menu-item" data-section="pagos">
+                    <i class="fas fa-credit-card"></i> Pasarela de Pagos
+                </div>
+                <div class="menu-item" data-section="api">
+                    <i class="fas fa-code"></i> API
+                </div>
+            </div>
+
+            <!-- Contenido -->
+            <div class="settings-content">
+                <!-- Sección General -->
+                <div class="settings-section active" id="general">
+                    <h2 class="section-title"><i class="fas fa-sliders-h"></i> Ajustes Generales</h2>
+                    
+                    <div class="config-card">
+                        <h4>Información del Estacionamiento</h4>
+                        
+                        <div class="form-group">
+                            <label>Nombre del Estacionamiento</label>
+                            <input type="text" class="form-control" value="Parking Premium Center">
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Teléfono</label>
+                                <input type="text" class="form-control" value="+1 234 567 890">
+                            </div>
+                            <div class="form-group">
+                                <label>Correo Electrónico</label>
+                                <input type="email" class="form-control" value="contacto@parking.com">
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Dirección</label>
+                            <textarea class="form-control" rows="3">Av. Principal 123, Ciudad</textarea>
+                        </div>
+                    </div>
+                    
+                    <div class="config-card">
+                        <h4>Configuración del Sistema</h4>
+                        
+                        <div class="form-group">
+                            <label>Zona Horaria</label>
+                            <select class="form-control">
+                                <option>UTC-05:00 (Eastern Time)</option>
+                                <option selected>UTC-06:00 (Central Time)</option>
+                                <option>UTC-07:00 (Mountain Time)</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Idioma</label>
+                            <select class="form-control">
+                                <option selected>Español</option>
+                                <option>English</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <div class="switch-container">
+                                <label>Modo Mantenimiento</label>
+                                <label class="switch">
+                                    <input type="checkbox">
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                            <small class="text-muted">Cuando está activado, solo los administradores pueden acceder al sistema.</small>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <button class="btn btn-primary">Guardar Cambios</button>
+                        <button class="btn btn-secondary">Cancelar</button>
+                    </div>
+                </div>
+                
+                <!-- Sección Tarifas -->
+                <div class="settings-section" id="tarifas">
+                    <h2 class="section-title"><i class="fas fa-tags"></i> Configuración de Tarifas</h2>
+                    
+                    <div class="config-card">
+                        <h4>Tarifas por Tipo de Vehículo</h4>
+                        
+                        <table style="width: 100%; border-collapse: collapse;">
+                            <thead>
+                                <tr>
+                                    <th style="text-align: left; padding: 10px; border-bottom: 1px solid #444;">Tipo</th>
+                                    <th style="text-align: left; padding: 10px; border-bottom: 1px solid #444;">Primera Hora</th>
+                                    <th style="text-align: left; padding: 10px; border-bottom: 1px solid #444;">Horas Adicionales</th>
+                                    <th style="text-align: left; padding: 10px; border-bottom: 1px solid #444;">Día Completo</th>
+                                    <th style="text-align: left; padding: 10px; border-bottom: 1px solid #444;">Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td style="padding: 10px; border-bottom: 1px solid #444;">Automóvil</td>
+                                    <td style="padding: 10px; border-bottom: 1px solid #444;"><input type="text" class="form-control" value="$3.00" style="width: 80px;"></td>
+                                    <td style="padding: 10px; border-bottom: 1px solid #444;"><input type="text" class="form-control" value="$1.50" style="width: 80px;"></td>
+                                    <td style="padding: 10px; border-bottom: 1px solid #444;"><input type="text" class="form-control" value="$15.00" style="width: 80px;"></td>
+                                    <td style="padding: 10px; border-bottom: 1px solid #444;">
+                                        <button class="btn btn-secondary" style="padding: 5px 10px;">Guardar</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 10px; border-bottom: 1px solid #444;">Motocicleta</td>
+                                    <td style="padding: 10px; border-bottom: 1px solid #444;"><input type="text" class="form-control" value="$2.00" style="width: 80px;"></td>
+                                    <td style="padding: 10px; border-bottom: 1px solid #444;"><input type="text" class="form-control" value="$1.00" style="width: 80px;"></td>
+                                    <td style="padding: 10px; border-bottom: 1px solid #444;"><input type="text" class="form-control" value="$10.00" style="width: 80px;"></td>
+                                    <td style="padding: 10px; border-bottom: 1px solid #444;">
+                                        <button class="btn btn-secondary" style="padding: 5px 10px;">Guardar</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <div class="form-group">
+                        <button class="btn btn-primary">Añadir Nuevo Tipo</button>
+                    </div>
+                </div>
+                
+                <!-- Otras secciones tendrían contenido similar -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Cambiar entre secciones
+            const menuItems = document.querySelectorAll('.menu-item');
+            const sections = document.querySelectorAll('.settings-section');
+            
+            menuItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    // Remover clase active de todos
+                    menuItems.forEach(i => i.classList.remove('active'));
+                    sections.forEach(s => s.classList.remove('active'));
+                    
+                    // Agregar clase active al seleccionado
+                    this.classList.add('active');
+                    const sectionId = this.getAttribute('data-section');
+                    document.getElementById(sectionId).classList.add('active');
+                });
+            });
+            
+            // Simular guardado de configuración
+            document.querySelectorAll('.btn-primary').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    alert('Configuración guardada correctamente');
+                });
+            });
+        });
+    </script>
+</body>
+</html>

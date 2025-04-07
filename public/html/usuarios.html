@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Usuarios | ParkingAdmin</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/public/css/style_usuarios.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Encabezado -->
+        <div class="page-header">
+            <h1 class="page-title"><i class="fas fa-users"></i> Gestión de Usuarios</h1>
+            <div class="header-actions">
+                <button class="btn-add-user">
+                    <i class="fas fa-plus"></i> Nuevo Usuario
+                </button>
+            </div>
+        </div>
+
+        <!-- Barra de búsqueda y filtros -->
+        <div class="user-actions">
+            <div class="search-box">
+                <i class="fas fa-search"></i>
+                <input type="text" placeholder="Buscar usuarios...">
+            </div>
+
+            <div class="filter-group">
+                <select style="background: #393939; color: white; border: none; padding: 10px; border-radius: 5px;">
+                    <option>Todos los roles</option>
+                    <option>Administrador</option>
+                    <option>Operador</option>
+                    <option>Cliente</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Tabla de usuarios -->
+        <div class="users-table">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Usuario</th>
+                        <th>Email</th>
+                        <th>Rol</th>
+                        <th>Estado</th>
+                        <th>Último acceso</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <div class="user-name">
+                                <img src="https://randomuser.me/api/portraits/men/32.jpg" class="user-avatar">
+                                <span>Carlos Mendoza</span>
+                            </div>
+                        </td>
+                        <td>carlos@example.com</td>
+                        <td>Administrador</td>
+                        <td><span class="user-status status-active">Activo</span></td>
+                        <td>Hoy, 10:30 AM</td>
+                        <td>
+                            <button class="action-btn" title="Editar"><i class="fas fa-edit"></i></button>
+                            <button class="action-btn delete" title="Eliminar"><i class="fas fa-trash-alt"></i></button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="user-name">
+                                <img src="https://randomuser.me/api/portraits/women/44.jpg" class="user-avatar">
+                                <span>Ana López</span>
+                            </div>
+                        </td>
+                        <td>ana@example.com</td>
+                        <td>Operador</td>
+                        <td><span class="user-status status-active">Activo</span></td>
+                        <td>Ayer, 4:15 PM</td>
+                        <td>
+                            <button class="action-btn" title="Editar"><i class="fas fa-edit"></i></button>
+                            <button class="action-btn delete" title="Eliminar"><i class="fas fa-trash-alt"></i></button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="user-name">
+                                <img src="https://randomuser.me/api/portraits/men/75.jpg" class="user-avatar">
+                                <span>Roberto Sánchez</span>
+                            </div>
+                        </td>
+                        <td>roberto@example.com</td>
+                        <td>Cliente</td>
+                        <td><span class="user-status status-inactive">Inactivo</span></td>
+                        <td>15/06/2023</td>
+                        <td>
+                            <button class="action-btn" title="Editar"><i class="fas fa-edit"></i></button>
+                            <button class="action-btn delete" title="Eliminar"><i class="fas fa-trash-alt"></i></button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="user-name">
+                                <img src="https://randomuser.me/api/portraits/women/68.jpg" class="user-avatar">
+                                <span>María González</span>
+                            </div>
+                        </td>
+                        <td>maria@example.com</td>
+                        <td>Cliente</td>
+                        <td><span class="user-status status-pending">Pendiente</span></td>
+                        <td>Nunca</td>
+                        <td>
+                            <button class="action-btn" title="Editar"><i class="fas fa-edit"></i></button>
+                            <button class="action-btn delete" title="Eliminar"><i class="fas fa-trash-alt"></i></button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Paginación -->
+        <div class="pagination">
+            <button class="page-btn"><i class="fas fa-chevron-left"></i></button>
+            <button class="page-btn active">1</button>
+            <button class="page-btn">2</button>
+            <button class="page-btn">3</button>
+            <button class="page-btn"><i class="fas fa-chevron-right"></i></button>
+        </div>
+    </div>
+
+    <script>
+        // Funcionalidad básica
+        document.addEventListener('DOMContentLoaded', function() {
+            // Botón para añadir usuario
+            document.querySelector('.btn-add-user').addEventListener('click', function() {
+                alert('Funcionalidad para añadir nuevo usuario');
+                // Aquí iría el código para mostrar un modal/formulario
+            });
+
+            // Botones de acción
+            document.querySelectorAll('.action-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const action = this.classList.contains('delete') ? 'eliminar' : 'editar';
+                    alert(`Acción: ${action} usuario`);
+                });
+            });
+        });
+    </script>
+</body>
+</html>

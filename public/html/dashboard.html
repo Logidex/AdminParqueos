@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/public/css/style_dashboard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <title>Dashboard</title>
+</head>
+<body>
+    <!-- Contenido Principal -->
+    <div class="main-content">
+        <!-- Tarjetas de Estadísticas -->
+        <div class="cards">
+            <div class="card">
+                <div>
+                    <h1 id="total-spaces">--</h1>
+                    <span>Espacios totales</span>
+                </div>
+                <i class="fas fa-parking"></i>
+            </div>
+            <div class="card">
+                <div>
+                    <h1 id="occupied">--</h1>
+                    <span>Ocupados</span>
+                </div>
+                <i class="fas fa-car"></i>
+            </div>
+            <div class="card">
+                <div>
+                    <h1 id="available">--</h1>
+                    <span>Disponibles</span>
+                </div>
+                <i class="fas fa-check-circle"></i>
+            </div>
+        </div>
+
+        <!-- Tabla de Movimientos -->
+        <div class="recent-parks">
+            <div class="card">
+                <div class="card-header">
+                    <h3><i class="fas fa-history"></i> Últimos movimientos</h3>
+                    <button id="refresh-btn" class="refresh-btn">
+                        <i class="fas fa-sync-alt"></i> Actualizar
+                    </button>
+                </div>
+                <div class="card-body">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Espacio</th>
+                                <th>Placa</th>
+                                <th>Hora entrada</th>
+                                <th>Estado</th>
+                            </tr>
+                        </thead>
+                        <tbody id="movements-table">
+                            <!-- Datos dinámicos desde JS -->
+                        </tbody>
+                    </table>
+                    <div id="error-message" class="error-message" style="display: none;">
+                        Error al cargar los datos. Intente nuevamente.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Incluye el archivo JS externo -->
+    <script src="/public/js/dashboard.js"></script>
+</body>
+</html>
